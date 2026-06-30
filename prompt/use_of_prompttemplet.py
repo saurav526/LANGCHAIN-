@@ -1,34 +1,71 @@
-from langchain_openai import ChatOpenAi
+from langchain_openai import ChatOpenAI
 import streamlit as st
-from dotenv import load_env
-from lanchain_core.prompts import PromptTemplate    
+from dotenv import load_dotenv
+from langchain_core.prompts import PromptTemplate
 
-load_env()
+# Load environment variables
+load_dotenv()
 
-model = ChatOpenAi()
+# Create model
+model = ChatOpenAI()
 
-paper_input = st.selectbox("select the reserach paper",["attention is all you need","BERT","GPT-3","DIFFISUION MODEL BEATS gans"])
-style_input = st.selectbox("select he explation style",["beignner-friendly","technical","code-oriented","mathmetical"])
-length_input = st.selectbox('select explation length',["in 100 words","in 200 words","in 300 words"])
-
-template = PromptTemplate(
-    input_variables=["paper", "style", "length"],
-    template="summarize the research paper {paper_input} in a " \
-    "explation style: {style_input}  and" \
-    "explation length: {length_input}" \
-    "1. Mathmetical detail:" \
-    "-include the relevent mathmetical equations and derivations" \
-    "explain the mathmetical concepts using simple ,intutive code}"
-    "" \
+# Streamlit UI
+paper_input = st.selectbox(
+    "Select the research paper",
+    [
+        "Attention Is All You Need",
+        "BERT",
+        "GPT-3",
+        "Diffusion Models Beat GANs"
+    ]
 )
 
-prompt= template.invoke({
-    'paper_input': paper_input,
-    'style_input': style_input,
-    'length_input': length_input
+style_input = st.selectbox(
+    "Select the explanation style",
+    [
+        "Beginner-friendly",
+        "Technical",
+        "Code-oriented",
+        "Mathematical"
+    ]
+)
 
-})
+length_input = st.selectbox(
+    "Select explanation length",
+    [
+        "100 words",
+        "200 words",
+        "300 words"
+    ]
+)
 
-if st.button("summeries"):
-    result =model.invoke(prompt)
+# Prompt Template
+template = PromptTemplate(
+    template="""
+Summarize the research paper "{paper_input}" in the following style:
+
+Explanation Style: {style_input}
+Explanation Length: {length_input}
+
+Also include:
+1. Mathematical details.
+2. Relevant equations (if applicable).
+3. Intuitive explanations of the mathematics.
+4. Simple code examples where appropriate.
+""",
+    input_variables=["paper_input", "style_input", "length_input"]
+)
+
+# Create prompt
+prompt = template.invoke(
+    {
+        "paper_input": paper_input,
+        "style_input": style_input,
+        "length_input": length_input,
+    }
+)
+
+# Button
+if st.button("Summarize"):
+    result = model.invoke(prompt)
     st.write(result.content)
