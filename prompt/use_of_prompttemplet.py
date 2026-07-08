@@ -40,32 +40,13 @@ length_input = st.selectbox(
 )
 
 # Prompt Template
-template = PromptTemplate(
-    template="""
-Summarize the research paper "{paper_input}" in the following style:
+template = load_prompt_template("prompt_template.json") 
+#assuming you have saved the template in a JSON file named "prompt_template.json" in the same directory.
 
-Explanation Style: {style_input}
-Explanation Length: {length_input}
-
-Also include:
-1. Mathematical details.
-2. Relevant equations (if applicable).
-3. Intuitive explanations of the mathematics.
-4. Simple code examples where appropriate.
-""",
-    input_variables=["paper_input", "style_input", "length_input"]
-)
-
-# Create prompt
-prompt = template.invoke(
-    {
-        "paper_input": paper_input,
-        "style_input": style_input,
-        "length_input": length_input,
-    }
-)
-
-# Button
 if st.button("Summarize"):
-    result = model.invoke(prompt)
-    st.write(result.content)
+    chain = template | model
+    result = chain.invoke({
+            "paper_input": paper_input,
+            "style_input": style_input,
+            "length_input": length_input,})
+st.write(result.content)

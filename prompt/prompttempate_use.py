@@ -55,7 +55,7 @@ Also include:
 """,
     input_variables=["paper_input", "style_input", "length_input"]
 )
-template.save("prompt_template.json")
+
 # Create prompt
 prompt = template.invoke(
     {
