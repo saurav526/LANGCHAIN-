@@ -10,6 +10,8 @@ chat_template = ChatPromptTemplate([
 
 prompt = chat_template.format_prompt(domain="AI", topic="machine learning")
 print(prompt.to_messages())
+#use of message templates 
+print("\n\n")
 
 from langchain_core.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
 
