@@ -10,3 +10,13 @@ chat_template = ChatPromptTemplate([
 
 prompt = chat_template.format_prompt(domain="AI", topic="machine learning")
 print(prompt.to_messages())
+
+from langchain_core.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
+
+chat_template = ChatPromptTemplate([
+    SystemMessagePromptTemplate.from_template("You are a helpful {domain} assistant."),
+    HumanMessagePromptTemplate.from_template("Explain in simple terms, what is {topic}?")
+])
+
+prompt = chat_template.format_prompt(domain="AI", topic="machine learning")
+print(prompt.to_messages())
