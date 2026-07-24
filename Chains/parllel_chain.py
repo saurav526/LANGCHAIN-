@@ -9,8 +9,8 @@ from langchain.schema.runnable import RunnableParallel
 load_dotenv()
 
 
-mmodel1 = ChatOpenAI()
-model2 = chatanthropic()
+model1 = ChatOpenAI()
+model2 = Chatanthropic()
 
 prompt1 = PromptTemplate(
     template="generate a 5 facts about the given topic: {topic}",
