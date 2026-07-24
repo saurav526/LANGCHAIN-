@@ -1,7 +1,7 @@
 from langchain_openai import OpenAI
 from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
-from lngchain_core.output_parser import StrOutputParser
+from langchain_core.output_parser import StrOutputParser
 from langchain_anthropic import ChatAnthropic
 from langchain.schema.runnable import RunnableParallel
 
